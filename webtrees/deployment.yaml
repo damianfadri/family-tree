@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webtrees
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webtrees
+  template:
+    metadata:
+      labels:
+        app: webtrees
+    spec:
+      containers:
+        - name: webtrees
+          image: ghcr.io/nathanvaughn/webtrees:latest
+          envFrom:
+          - configMapRef:
+              name: webtrees-configmap
+              optional: true
+          - secretRef:
+              name: webtrees-secrets
+          ports:
+          - containerPort: 80
+          volumeMounts:
+          - name: app-data
+            mountPath: /var/www/webtrees/data/
+      volumes:
+      - name: app-data
+        persistentVolumeClaim:
+          claimName: webtrees-app-data-pvc

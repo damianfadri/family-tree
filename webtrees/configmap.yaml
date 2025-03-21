@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webtrees-configmap
+data:
+  PRETTY_URLS: "1"
+  HTTPS: "0"
+  HTTPS_REDIRECT: "0"
+  LANG: "en-US"
+  PUID: "1000"
+  PGID: "1000"
